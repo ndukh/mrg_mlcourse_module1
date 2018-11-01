@@ -1,28 +1,16 @@
-import numpy as np
 import argparse
 
-from utils import load_weights, read_mnist, preprocessing_data
 from sklearn.metrics import classification_report
 
-
-def predict(X, weights):
-    pred = np.dot(X, weights.T).T
-    return np.argmax(pred, axis=0)
+from mySklearn.Preprocessor import scale
+from utils import read_idx, load_model
 
 
-def prediction_by_file(X, y, filename, digits=2):
-    weights = load_weights(filename)
-    prediction_by_weights(X, y, weights, digits=digits)
-
-
-def prediction_by_weights(X, y, weights, digits=2):
-    predicted_labels = predict(X, weights)
-    print(classification_report(y, predicted_labels, digits=digits))
-
-
-def accuracy(X, y, weights):
-    pred = predict(X, weights)
-    return np.mean(pred == y)
+def preprocess(X, pca, bin_threshold=0.95):
+    X = X.reshape((X.shape[0], -1))
+    X = scale(X)
+    X = pca.transform(X)
+    return X
 
 
 def parse_args():
@@ -45,15 +33,18 @@ def parse_args():
 
 
 def main():
-
     args = parse_args()
 
-    X_original = read_mnist(args.x_test_dir)
-    X_test = preprocessing_data(X_original)
-    y_test = read_mnist(args.y_test_dir)
+    X = read_idx(args.x_test_dir)
+    y = read_idx(args.y_test_dir)
+
+    model_data = load_model(args.model_input_dir)
+    model = model_data['model']
+    X = preprocess(X, model_data['pca'])
 
     print('Metrics on the test data:\n')
-    prediction_by_file(X_test, y_test, args.model_input_dir, 4)
+    predicted_labels = model.predict(X)
+    print(classification_report(y, predicted_labels, digits=5))
 
 
 if __name__ == "__main__":
