@@ -1,9 +1,11 @@
 # mrg_mlcourse_module1
 ## Solving steps
-1. Using SVM-model with One-vs-All strategy. (F1-score = 0.9079)
-2. Add Cross-Validation. (F1-score = 0.9137, it was a bad idea)
+1. PCA (by 0.99% explained variance threshold; 784 features -> 331). 
+2. Search over a grid of hyperparameters.
+3. Choosing between Logistic Regression (softmax) and SVM (ovr) by it results.
+Solver — stochastic average gradient with some modifications.
 ## Results
-Will be soon.
+about 0.9 macro f1 in average, specific value depends on random
 ## Using
 **Training**
 ```shell
@@ -26,6 +28,8 @@ optional arguments:
         -k K, --k K           k-fold parameter, default: 1
         -i ITER_NUM, --iter_num ITER_NUM
                         number of iterations, default: 3000
+        -ih ITER_NUM_HYP, --max_iter_hyp
+                          number of iterations for gridsearch
 ```
 
 **Predict**
