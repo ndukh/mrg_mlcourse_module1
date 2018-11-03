@@ -61,8 +61,8 @@ def main():
     X_train, X_test, y_train, y_test, pca = preprocess(X, y)
     model_params = {
         'model': [SVM, LogisticRegression],
-        'C': [1e5, 1e7],  # [1, 10, 1e2, 1e5, 1e7, 1e10],
-        'step': [100, 150],  # [10, 50, 100, 150, 250]
+        'C': [1e5, 1e6, 1e7],  # [1, 10, 1e2, 1e5, 1e7, 1e10],
+        'step': [50, 100, 150, 250],  # [10, 50, 100, 150, 250]
     }
 
     models_res = {}
