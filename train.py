@@ -37,9 +37,9 @@ def parse_args():
                              f'default: {path_to_model}')
     parser.add_argument('-v', '--verbose', default='tqdm',
                         help='is verbosity, options: True, False, tqdm, default: tqdm')
-    parser.add_argument('-i', '--max_iter', type=int, default=1000,
+    parser.add_argument('-i', '--max_iter', type=int, default=5000,
                         help='number of iterations, default: 1000')
-    parser.add_argument('-ih', '--max_iter_hyp', type=int, default=500,
+    parser.add_argument('-ih', '--max_iter_hyp', type=int, default=100,
                         help='number of iterations for hyper params optimizing, default: 500')
 
     return parser.parse_args()
